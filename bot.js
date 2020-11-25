@@ -67,45 +67,40 @@ function drawCard(userChoice) {
   }
   history.push(tmp);
   // let passFail = isSmokeOrFire(choice, color, number, hist);
+  if(isNaN(number) == true){
+    let number = tmp.slice(0,1);
+    return tmp;
+  }
   switch(choice){
     case "!smoke":
       if(color === choice){
-        let message = "Correct! Drinks: " + counter + ". ";
+        return "Correct! Drinks: " + tmp + " " + counter + ". ";
       }else{
-        let message = "Wrong! Take " + counter + " drink(s). ";
+        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
       }
-      break;
     case "!fire":
       if(color === choice){
-        let message = "Correct! Drinks: " + counter + ". ";
+        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
       }else{
-        let message = "Wrong! Take " + counter + " drink(s). ";
+        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
       }
-      break;
     case "!higher":
-      if(number > temp){
-        let message = "Correct! Drinks: " + counter + ". ";
+      if(number > tmp){
+        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
       }else{
-        let message = "Wrong! Take " + counter + " drink(s). ";
+        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
       }
-      break;
     case "!lower":
-      if(number < temp){
-        let message = "Correct! Drinks: " + counter + ". ";
+      if(number < tmp){
+        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
       }else{
-        let message = "Wrong! Take " + counter + ". ";
+        return "Wrong! Take "  + tmp + " " + counter + ". ";
       }
-      break;
     default:
-      let message = "Something went wrong. Please enter another command. ";
-      break;
+      return "Something went wrong. Please enter another command. ";
       }
-  }
-  if(isNaN(number) == true){
-    let number = tmp.slice(0,1);
-    return message + passFail + number;
+
     }
-  return message + passFail + number;
 
 
 // function isSmokeOrFire(choice, color, number, hist) {
@@ -165,6 +160,12 @@ client.on('message', msg => {
       msg.reply("Smoke or fire, lower or higher?");
     }
     if(msg.content === '!higher') {
+      let userChoice = msg.content;
+      let result = drawCard(userChoice);
+      msg.reply(result);
+      msg.reply("Smoke or fire, lower or higher?");
+    }
+    if(msg.content === '!lower') {
       let userChoice = msg.content;
       let result = drawCard(userChoice);
       msg.reply(result);
