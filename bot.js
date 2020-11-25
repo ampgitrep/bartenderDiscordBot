@@ -66,49 +66,82 @@ function drawCard(userChoice) {
     color = fire;
   }
   history.push(tmp);
-  let passFail = isSmokeOrFire(choice, color, number, hist);
-  message = tmp + " - " ;
+  // let passFail = isSmokeOrFire(choice, color, number, hist);
+  switch(choice){
+    case "!smoke":
+      if(color === choice){
+        let message = "Correct! Drinks: " + counter + ". ";
+      }else{
+        let message = "Wrong! Take " + counter + " drink(s). ";
+      }
+      break;
+    case "!fire":
+      if(color === choice){
+        let message = "Correct! Drinks: " + counter + ". ";
+      }else{
+        let message = "Wrong! Take " + counter + " drink(s). ";
+      }
+      break;
+    case "!higher":
+      if(number > temp){
+        let message = "Correct! Drinks: " + counter + ". ";
+      }else{
+        let message = "Wrong! Take " + counter + " drink(s). ";
+      }
+      break;
+    case "!lower":
+      if(number < temp){
+        let message = "Correct! Drinks: " + counter + ". ";
+      }else{
+        let message = "Wrong! Take " + counter + ". ";
+      }
+      break;
+    default:
+      let message = "Something went wrong. Please enter another command. ";
+      break;
+      }
+  }
   if(isNaN(number) == true){
     let number = tmp.slice(0,1);
     return message + passFail + number;
     }
   return message + passFail + number;
-}
 
-function isSmokeOrFire(choice, color, number, hist) {
-  let result2 = color;
-  let result3 = choice;
-  counter++;
-  isHigherOrLower(number, hist, choice);
-  if(result2 === result3){
-    let message = "Correct! Drinks: " + counter; 
-    return message;
-  }
-  else {
-    let message = "WRONG!! Take " + counter + " drinks.";
-    counter = 0;
-    return message;
-  }
-}
+
+// function isSmokeOrFire(choice, color, number, hist) {
+//   let result2 = color;
+//   let result3 = choice;
+//   counter++;
+//   isHigherOrLower(number, hist, choice);
+//   if(result2 === result3){
+//     let message = "Correct! Drinks: " + counter; 
+//     return message;
+//   }
+//   else {
+//     let message = "WRONG!! Take " + counter + " drinks.";
+//     counter = 0;
+//     return message;
+//   }
+// }
   
-function isHigherOrLower(number, hist, choice){
-  let result4 = number;
-  let result5 = choice;
-  let higher = "!higher";
-  let lower = "!lower";
-  let last = hist;
-  counter++;
-  if(counter > 0 && result5 === higher){
-    if(last > result4){
-      let message = "Correct! Drinks: " + counter;
-      return message;
-    }
-    else{
-      let message = "WRONG! Take " + counter + " drinks.";
-      return message;
-    }
-  }
-}
+// function isHigherOrLower(number, hist, choice){
+//   let result4 = number;
+//   let result5 = choice;
+//   let higher = "!higher";
+//   let lower = "!lower";
+//   let last = hist;
+//   counter++;
+//   if(counter > 0 && result5 === higher){
+//     if(last > result4){
+//       let message = "Correct! Drinks: " + counter;
+//       return message;
+//     }
+//     else{
+//       let message = "WRONG! Take " + counter + " drinks.";
+//       return message;
+//     }
+//   }
+// }
 
 let history = [];
 let counter = 0;
