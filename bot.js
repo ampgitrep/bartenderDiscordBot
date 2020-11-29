@@ -56,50 +56,66 @@ function drawCard(userChoice) {
   let smoke = "!smoke";
   let fire = "!fire";
   let color;
-  let message;
   let choice = userChoice;
   let number = parseInt(tmp);
-  
+  let counter = 0;
   if(tmp.includes("Spades") === true || tmp.includes("Clubs") === true) {
     color = smoke;
   } else {
     color = fire;
   }
+  
   history.push(tmp);
   // let passFail = isSmokeOrFire(choice, color, number, hist);
   if(isNaN(number) == true){
     let number = tmp.slice(0,1);
-    return tmp;
+    return number;
   }
   switch(choice){
     case "!smoke":
       if(color === choice){
-        return "Correct! Drinks: " + tmp + " " + counter + ". ";
+        counter++;
+        let message =  tmp + " Correct! Drinks: "  +  counter + " " + ". ";
+        return message;
       }else{
-        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
+        let message = tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
+        counter = 0;
+        return message;
       }
     case "!fire":
       if(color === choice){
-        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
+        counter++;
+        let message =   tmp + " Correct! Drinks: "  +  counter + " " + ". ";
+        return message;
       }else{
-        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
+        let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
+        counter = 0;
+        return message;
       }
     case "!higher":
       if(number > tmp){
-        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
+        counter++;
+        let message =    tmp + " Correct! Drinks: "  +  counter + " " + ". ";
+        return message;
       }else{
-        return "Wrong! Take "  + tmp + " " + counter + " drink(s). ";
+        let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
+        counter = 0;
+        return message;
       }
     case "!lower":
       if(number < tmp){
-        return "Correct! Drinks: "  + tmp + " " + counter + ". ";
+        counter++;
+        let message =   tmp + " Correct! Drinks: "  +  counter + " " + ". ";
+        return message;
       }else{
-        return "Wrong! Take "  + tmp + " " + counter + ". ";
+        let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
+        counter = 0;
+        return message;
       }
     default:
-      return "Something went wrong. Please enter another command. ";
+      let message =  "Something went wrong. Please enter another command. ";
+      return message;
       }
-
     }
 
 
@@ -139,7 +155,7 @@ function drawCard(userChoice) {
 // }
 
 let history = [];
-let counter = 0;
+
 const deck1 = new Deck();
 client.on('message', msg => {
   if(msg.content === '!smoke or fire') {
