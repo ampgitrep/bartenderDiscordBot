@@ -1,57 +1,56 @@
 require('dotenv').config();
-
+//set our api for the bot
 const Discord = require('discord.js');
 const client = new Discord.Client();
-
+//console log our bots name to let us know we've joined the server
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
-
+//take our token from .env
 client.login(process.env.DISCORD_TOKEN);
-
+//construct our playing card deck object
 class Deck {
   constructor() {
     this.deck = [];
-
+    //build out each array with suits and numbers
     const suits = ["Hearts", "Spades", "Clubs", "Diamonds"];
     const values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
 
-
+    //two loops, one for each array, and pull out one suit and one number
     for (let suit in suits) {
       for (let value in values) {
         this.deck.push(`${values[value]} of ${suits[suit]}`);
       }
     }
   }
-
+  //randomize the items in our deck object
   shuffle() {
     const { deck } = this;
     let m = deck.length,
       i;
-
+    
     while (m) {
       i = Math.floor(Math.random() * m--);
-
+      //pull a suit and a card, and randomize the results into a new object
       [deck[m], deck[i]] = [deck[i], deck[m]];
     }
 
     return this;
   }
-
+  //take last item off of deck (card we just made)
   deal() {
     return this.deck.pop();
   }
 }
-
+//UI logic
+//function to be called by user, with prompted response
 function shuffleCards() {
   deck1.shuffle();
   let message = `smoke or fire?`;
   return message;
 }
-
+//function to draw card by user, handle logic, and return results
 function drawCard(userChoice) {
-  //result returns 
-  
   
   let result = deck1.deal();
   let tmp = result;
@@ -61,17 +60,18 @@ function drawCard(userChoice) {
   let color;
   let choice = userChoice;
   let number; 
+  //define the colors of each card to compare with user response
   if(tmp.includes("Spades") === true || tmp.includes("Clubs") === true) {
     color = smoke;
   } else {
     color = fire;
   }
-
+//unless hist returns a character, set number to value of hist
   if(isNaN(hist) === false){
     number = parseInt(hist);
   }
 
-  
+  //convert face cards to numbers for logic separation
   if(hist === "J"){
     number = 11;
   }else if(hist === "Q"){
@@ -83,12 +83,15 @@ function drawCard(userChoice) {
   }else{
     hist = hist;
   }
-
+  //temporary storage for the last value of our counter.
   lastCount = counter;
   
-  
+  //put the card drawn in an array for storage
   history.push(number);
+  //this is our comparator for the higher/lower user commands
   let lastNumber = history[history.length -2];
+
+  //statement evaluates user input to control logic flow and reply to user
   switch(choice){
     case "!smoke":
       if(color === choice){
@@ -142,6 +145,7 @@ function drawCard(userChoice) {
       return message;
       }
     }
+
 
 const deck1 = new Deck();
 const history = [];
