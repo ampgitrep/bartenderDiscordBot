@@ -50,6 +50,9 @@ function shuffleCards() {
 }
 
 function drawCard(userChoice) {
+  //result returns 
+  
+  
   let result = deck1.deal();
   let tmp = result;
   let hist = tmp.slice(0,1);
@@ -57,20 +60,36 @@ function drawCard(userChoice) {
   let fire = "!fire";
   let color;
   let choice = userChoice;
-  let number = parseInt(tmp);
-  let counter = 0;
+  let number; 
+
   if(tmp.includes("Spades") === true || tmp.includes("Clubs") === true) {
     color = smoke;
   } else {
     color = fire;
   }
-  
-  history.push(tmp);
-  // let passFail = isSmokeOrFire(choice, color, number, hist);
-  if(isNaN(number) == true){
-    let number = tmp.slice(0,1);
-    return number;
+
+  if(isNaN(hist) === false){
+    number = parseInt(hist);
   }
+
+  
+  if(hist === "J"){
+    number = 11;
+  }else if(hist === "Q"){
+    number = 12;
+  }else if(hist === "K"){
+    number = 13;
+  }else if(hist === "A"){
+    number = 14;
+  }else{
+    hist = hist;
+  }
+
+  
+  
+  
+  history.push(number);
+  let lastNumber = history[history.length -2];
   switch(choice){
     case "!smoke":
       if(color === choice){
@@ -79,7 +98,6 @@ function drawCard(userChoice) {
         return message;
       }else{
         let message = tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
-        counter = 0;
         return message;
       }
     case "!fire":
@@ -89,27 +107,24 @@ function drawCard(userChoice) {
         return message;
       }else{
         let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
-        counter = 0;
         return message;
       }
     case "!higher":
-      if(number > tmp){
+      if(number > lastNumber){
         counter++;
         let message =    tmp + " Correct! Drinks: "  +  counter + " " + ". ";
         return message;
       }else{
         let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
-        counter = 0;
         return message;
       }
     case "!lower":
-      if(number < tmp){
+      if(number < lastNumber){
         counter++;
         let message =   tmp + " Correct! Drinks: "  +  counter + " " + ". ";
         return message;
       }else{
         let message =  tmp + " " + "Wrong! Take "  + counter + " drink(s). ";
-        counter = 0;
         return message;
       }
     default:
@@ -118,45 +133,9 @@ function drawCard(userChoice) {
       }
     }
 
-
-// function isSmokeOrFire(choice, color, number, hist) {
-//   let result2 = color;
-//   let result3 = choice;
-//   counter++;
-//   isHigherOrLower(number, hist, choice);
-//   if(result2 === result3){
-//     let message = "Correct! Drinks: " + counter; 
-//     return message;
-//   }
-//   else {
-//     let message = "WRONG!! Take " + counter + " drinks.";
-//     counter = 0;
-//     return message;
-//   }
-// }
-  
-// function isHigherOrLower(number, hist, choice){
-//   let result4 = number;
-//   let result5 = choice;
-//   let higher = "!higher";
-//   let lower = "!lower";
-//   let last = hist;
-//   counter++;
-//   if(counter > 0 && result5 === higher){
-//     if(last > result4){
-//       let message = "Correct! Drinks: " + counter;
-//       return message;
-//     }
-//     else{
-//       let message = "WRONG! Take " + counter + " drinks.";
-//       return message;
-//     }
-//   }
-// }
-
-let history = [];
-
 const deck1 = new Deck();
+const history = [];
+let counter = 0;
 client.on('message', msg => {
   if(msg.content === '!smoke or fire') {
     let response = shuffleCards();
@@ -165,25 +144,25 @@ client.on('message', msg => {
   }
     if(msg.content === '!smoke') {
       let userChoice = msg.content;
-      let result = drawCard(userChoice);
+      let result = drawCard(userChoice,history,counter);
       msg.reply(result);
       msg.reply("Smoke or fire, low or higher?");  
     }
     if(msg.content === '!fire') {
       let userChoice = msg.content;
-      let result = drawCard(userChoice);
+      let result = drawCard(userChoice,history,counter);
       msg.reply(result);
       msg.reply("Smoke or fire, lower or higher?");
     }
     if(msg.content === '!higher') {
       let userChoice = msg.content;
-      let result = drawCard(userChoice);
+      let result = drawCard(userChoice,history,counter);
       msg.reply(result);
       msg.reply("Smoke or fire, lower or higher?");
     }
     if(msg.content === '!lower') {
       let userChoice = msg.content;
-      let result = drawCard(userChoice);
+      let result = drawCard(userChoice,history,counter);
       msg.reply(result);
       msg.reply("Smoke or fire, lower or higher?");
     }
